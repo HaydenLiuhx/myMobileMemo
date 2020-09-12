@@ -1,7 +1,7 @@
 import { AppLoading, SplashScreen, Updates } from 'expo';
 import { Asset } from 'expo-asset';
 import Constants from 'expo-constants';
-import React from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Animated, Button, StyleSheet, Text, View } from 'react-native';
 
 // Instruct SplashScreen not to hide yet, we want to do this manually
