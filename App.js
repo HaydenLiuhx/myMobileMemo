@@ -1,90 +1,68 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image, Dimensions, TextInput, StatusBar, ScrollView } from "react-native";
-//import { Carousel } from "@ant-design/react-native";
-import { AppRegistry } from "react-native";
-import { categories } from './mock/dataArray'
-export default class App extends React.Component {
-  state={
-      categories: [],
-
-  }
-  handleGetListSuccess = () => {
-    
-    
-  }
-  componentDidMount = () => {
-    //   fetch('https://liuhuangxun.com/list.json')
-    //   .then((res) => res.json())
-    //   .then(this.handleGetListSuccess)
-    //   .catch(()=>{alert('Request Exception!')})
-  };
+ import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import 'react-native-gesture-handler';
+import Detail from './view/Detail/detail'
+import Home from "./view/Home/home";
+import My from "./view/My/my";
+import Setting from './view/Setting/setting'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+const Tab = createBottomTabNavigator();
+class App extends React.Component {
   render() {
-      const {width} = Dimensions.get('window')
-      const itemWidth = (width-20)/3
     return (
-      <View style={styles.container}>
-          <StatusBar barStyle='dark-content'></StatusBar>
-        <Image style={{width: 414, height: 280}} source={require('./resource/imgs/home-banner1.png')} />
-        <TextInput underlineColorAndroid='#fff' style={[styles.search, {top:240}]} placeholder="Please input search content:"></TextInput>
-        <ScrollView style={[styles.content, {margin:8}]}>
-            <View style={styles.list}>
-                {
-                    categories.map((item)=>{
-                        return(
-                            <View 
-                                key={item.id}
-                                style={[{width: itemWidth}, styles.item]}
-                            >
-                                <Image source={{uri: item.photo_url}} style={[{width: (itemWidth-20), height: (itemWidth-20)},styles.img]} />
-                                <View >
-                                    <Text style={styles.itemTitle}>{item.name}</Text>
-                                </View>
-                            </View>
-                        )
-                    })
-                }
-            </View>
-        </ScrollView>
-      </View>
+      <NavigationContainer>
+        <Tab.Navigator
+            initialRouteName="Home"
+            tabBarOptions={{
+              activeTintColor: '#eb2f96',
+              inactiveTintColor: 'gray',
+            }}
+        >
+          <Tab.Screen 
+            name="Home" 
+            component={Home} 
+            options={{
+              tabBarLabel: 'Home',
+              tabBarIcon: ({ tintColor }) => (
+                <Ionicons name="ios-home" tintColor='#eb2f96' color="#722ed1" size={30} />
+              ),
+            }}
+          />
+          <Tab.Screen name="Detail" component={Detail} 
+            name="Detail" 
+            component={Detail} 
+            options={{
+              tabBarLabel: 'Detail',
+              tabBarIcon: ({ tintColor }) => (
+                <Ionicons name="ios-today" tintColor='#eb2f96' color="#722ed1" size={30} />
+              ),
+            }}
+          />
+          <Tab.Screen name="My" component={My} 
+            name="My" 
+            component={My} 
+            options={{
+              tabBarLabel: 'My',
+              tabBarIcon: ({ tintColor }) => (
+                <Ionicons name="ios-person" tintColor='#eb2f96' color="#722ed1" size={30} />
+              ),
+            }}
+          />
+          <Tab.Screen name="Setting" component={Setting} 
+            name="Setting" 
+            component={Setting} 
+            options={{
+              tabBarLabel: 'Setting',
+              tabBarIcon: ({ tintColor }) => (
+                <Ionicons name="ios-settings" tintColor='#eb2f96' color="#722ed1" size={30} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#eee",
-  },
-  search: {
-    position: 'absolute',
-    left: 70,
-    right: 70,
-    height: 30,
-    lineHeight: 18,
-    backgroundColor: '#fff',
-    borderRadius:20,
-    paddingLeft:10,
-  },
-  content: {
-      flex: 1,
-      backgroundColor: '#fff',
-      marginBottom: 60,
-  },
-  list: {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap'
-  },
-  item:{
-      display:'flex',
-  },
-  img: {
-      marginLeft: 12,
-      marginTop: 7,
-      borderRadius: 20,
-  },
-  itemTitle: {
-      textAlign:'center',
-      lineHeight: 30,
-  }
-});
-AppRegistry.registerComponent("App", () => App);
+  export default App;
+ 
