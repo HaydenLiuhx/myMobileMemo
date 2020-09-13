@@ -1,16 +1,17 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image, Dimensions, TextInput, StatusBar, ScrollView } from "react-native";
+import { Button, View, Text, StyleSheet, Image, Dimensions, TextInput, StatusBar, ScrollView, TouchableWithoutFeedback } from "react-native";
 // import { AppRegistry } from "react-native";
 import { categories } from '../../mock/dataArray'
-
 export default class Home extends React.Component {
+    // static navigationOptions={
+    //     headerStyle: { height:0, backgroundColor:'#000'}
+    // }
     state={
         categories: [],
-  
     }
-    handleGetListSuccess = () => {
-      
-      
+    handleItemClick = (id) => {
+        const {navigate} = this.props.navigation
+        navigate('List' , {id: id})
     }
     componentDidMount = () => {
       //   fetch('https://liuhuangxun.com/list.json')
@@ -31,8 +32,8 @@ export default class Home extends React.Component {
                           {
                               categories.map((item)=>{
                                   return(
+                                    <TouchableWithoutFeedback onPress={()=>this.handleItemClick(item.id)} key={item.id}>
                                       <View 
-                                          key={item.id}
                                           style={[{width: itemWidth}, styles.item]}
                                       >
                                           <Image source={{uri: item.photo_url}} style={[{width: (itemWidth-20), height: (itemWidth-20)},styles.img]} />
@@ -40,12 +41,14 @@ export default class Home extends React.Component {
                                               <Text style={styles.itemTitle}>{item.name}</Text>
                                           </View>
                                       </View>
+                                    </TouchableWithoutFeedback>
                                   )
                               })
                           }
                       </View>
                   </ScrollView>
               </View>
+              
       );
     }
   }
